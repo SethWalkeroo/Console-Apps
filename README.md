@@ -1,7 +1,7 @@
 # Console-Apps
 A collection of my python console apps that I have made. You can launch all of them through the --> **manage.py file** <--
 
-**NOTE:** I just want to mention that the best way to experience all of the apps is through the manage.py file because it delivers an interface for launching all the applications. Not only that, but there is also a currency system that launches through manage.py and sort of gameifies the whole experience. You earn tokens by playing games and you can gamble your tokens at the slot machine. I hope to add more gambling features like Blackjack in the future, but slots is the only thing for now. I also want to mention that I am ***far*** from a professional developer and most of these programs have been a result of my learning process. Some files are more readable than others and although I have gone back and refactored older apps, there are still loads of issues to tackle. I will work to refactor what I can and add comments to explain features in the future. I am hesitant to do at the moment because I don't believe anybody will ever actually download this on their computer and I don't want to waste too much time on this. So if you do end up using this project, shoot me an email at sethrobertwalker@gmail.com. I would love to hear what you think about some of these apps and what I could improve on in the future. Enjoy!
+**NOTE:** I just want to mention that the best way to experience all of the apps is through the manage.py file because it delivers an interface for launching all the applications. Not only that, but there is also a currency system that launches through manage.py and sort of gameifies the whole experience. You earn tokens by playing games and you can gamble your tokens at the slot machine. Your tokens are stored in a json file along with your username and password information. I hope to add more gambling features like Blackjack in the future, but slots is the only thing for now. I also want to mention that I am ***far*** from a professional developer and most of these programs have been a result of my learning process. Some files are more readable than others and although I have gone back and refactored older apps, there are still loads of issues to tackle. I will work to refactor what I can and add comments to explain features in the future. I am hesitant to do at the moment because I don't believe anybody will ever actually download this on their computer and I don't want to waste too much time on this. So if you do end up using this project, shoot me an email at sethrobertwalker@gmail.com. I would love to hear what you think about some of these apps and what I could improve on in the future. Enjoy!
 
 **RECOMMENDATIONS AND REQUIREMENTS:** I highly recommend that you create a virtual environment within the venv folder to install all of the dependencies. There is already a requirements.txt file inside and a readme that will walk you through the process if you don't know how. I also recommend that you get your own youtube api key from console.developers.google.com and paste it in api-key.txt inside the data folder. You cannot launch the video player app without doing this.
 
@@ -25,10 +25,18 @@ A collection of my python console apps that I have made. You can launch all of t
 
 # Other files
 
+**login.py:** This file contains the functions for the login system used in manage.py. The file either takes a username and password, reads the user-info json file, then logs you in, or takes a username and password and updates the json file with the new user credentials. 
+
 **hangmanimage.py:** A file that simply holds an array of ascii art for **hangman.py**.
 
 **youtube.py:** Contains the youtube_search function that is used in **vidplayer.py**. This function is what uses youtube's api to query and create a dictionary of videos with their related video ids.
 
 **welcome.py:** Contains all of the title cards and loading animations used throughout all of the scripts. These cards are customizable and you can change the patterns, message, and colors associated with them. 
+
+**user-info.json:** Contains all of the usernames, passwords, and token counts for users who create an account in manage.py.
+
+**words.txt:** Contains all of the words used in hangman.py app.
+
+**api-key.txt:** The text file provided for you to paste you youtube api key if you want to use the videplayer.py app.
  
 
