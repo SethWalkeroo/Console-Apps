@@ -32,5 +32,11 @@ A collection of my python console apps that I have made. You can launch all of t
 **youtube.py:** Contains the youtube_search function that is used in **vidplayer.py**. This function is what uses youtube's api to query and create a dictionary of videos with their related video ids.
 
 **welcome.py:** Contains all of the title cards and loading animations used throughout all of the scripts. These cards are customizable and you can change the patterns, message, and colors associated with them. 
+
+**user-info.json** Contains all of the usernames, passwords, and token counts for users who create an account in manage.py.
+
+**words.txt** Contains all of the words used in hangman.py app.
+
+**api-key.txt** The text file provided for you to paste you youtube api key if you want to use the videplayer.py app.
  
 
