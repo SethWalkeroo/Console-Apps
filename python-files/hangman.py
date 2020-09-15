@@ -3,7 +3,7 @@ from random import choice
 from itertools import cycle
 from colored import fg, bg, attr
 from PyDictionary import PyDictionary
-from welcome import title_card
+from welcome import title_card, loading_animation
 from os import system
 from time import sleep
 from hangmanimage import man
@@ -98,7 +98,8 @@ class Hangman:
 		def main(self):
 
 			self.welcome_card('WELCOME TO HANGMAN!')
-
+			sleep(1)
+			loading_animation('Starting game...', time=1)
 			#main game loop
 			again = ''
 			while again != 'no':
@@ -148,6 +149,7 @@ class Hangman:
 						self.my_dict(definition)
 						print()
 						again = input('Would you like to play again? (yes/no): ')
+						loading_animation(time=1)
 						game_won = True
 						print()
 
@@ -155,7 +157,8 @@ class Hangman:
 
 			#exit message generated from my welcome script.
 			self.exit_card('EXITING HANGMAN!')
-
+			sleep(1)
+			loading_animation('Goodbye!', time=1)
 
 if __name__ == '__main__':
 	hangman = Hangman()

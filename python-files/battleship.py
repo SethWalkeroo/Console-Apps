@@ -8,7 +8,7 @@ from os import system
 #colors for testing
 clr = fg('pale_green_1a')
 clr2 = fg('red')
-clr3 = fg('blue')
+clr3 = fg('cyan')
 clr4 = fg('violet')
 clr5 = fg('dark_green')
 reset = attr('reset')
@@ -171,6 +171,7 @@ def battleship_main():
 		
 		display_board(game_board)
 		
+		print()
 		restart = input('Would you like to play again? (yes/no): ')
 
 		if restart != 'no':

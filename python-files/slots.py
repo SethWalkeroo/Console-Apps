@@ -13,7 +13,7 @@ class EmojiSlots:
         self.emoji_values = {f':{str(emoji)}:':value for emoji, value in emojis.items()}
         self.tokens = tokens
 
-    def slot_machine(self, time=40, width=3):
+    def slot_machine(self, time=30, width=3):
         result = choices([key for key in self.emoji_values], k=3)
         frames = cycle(['|', '/', '-', '\\'])
         for _ in range(time):
@@ -45,9 +45,8 @@ class EmojiSlots:
         print('----- each pull costs 100 tokens -----')
         print()
         command = input('Ready to play? (yes/no): ')
+        loading_animation(time=1)
         if command == 'yes':
-            print('-100 tokens')
-            sleep(.33)
             while command != 'no':
 
                 tokens -= 100
@@ -62,7 +61,9 @@ class EmojiSlots:
                     total_losings += winnings
 
                 self.whitespace(2)
-                command = input('Would you like to give it another whirl?: ')
+                print(f'Tokens: {tokens}')
+                print()
+                command = input('Would you like to give it another whirl? (yes/no): ')
                 if command == 'tokens':
                     print(tokens)
                     sleep(2)
@@ -80,12 +81,13 @@ class EmojiSlots:
         sleep(2)
         title_card('NOW LEAVING SLOTS!')
         sleep(1)
+        loading_animation(time=1)
 
         return total_losings
 
 
 if __name__ == '__main__':
     #Enter your own emojis and values
-    slots = EmojiSlots(snake=500, eggplant=1000,
+    slots = EmojiSlots(tokens=10000, snake=500, eggplant=1000,
                        star=1500,snail=300,angry=200)
     slots.main()
