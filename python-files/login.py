@@ -1,5 +1,6 @@
 from getpass import getpass
 from welcome import loading_animation, title_card
+from os import system
 import json
 
 
@@ -37,23 +38,27 @@ class LoginSystem:
                 print()
                 password = getpass(prompt="Enter your password:" )
                 if password != 'show':
+                    print()
                     password_test = getpass(prompt='Enter your password again: ')
             else:
                 print('Password visible. Type "show" again to hide password.')
                 print()
                 password = input('Enter your password: ')
                 if password != 'show':
+                    print()
                     password_test = input('Enter your password again: ')
             if password == 'show':
                 loading_animation(time=1)
                 password_visible = not password_visible
             elif password != password_test:
+                print()
                 loading_animation('Passwords didn\'t match! Try again.', time=2)
             else:
                 data['users'].update({username:{'password':password, 'tokens':"500"}})
+                print()
                 loading_animation('Password set! Creating account...', time=2)
                 break
-        update_json_data(data, self.path)
+        self.update_json_data(data, self.path)
         
 
     def account_login(self):
@@ -105,7 +110,7 @@ class LoginSystem:
                             loading_animation("Passwords didn't match! Try again.", time=2)
                         else:
                             data['users'][username]['password'] = password
-                            update_json_data(data, self.path)
+                            self.update_json_data(data, self.path)
                             loading_animation('Password set! Bringing you back to login...', time=2)
                             break
 
@@ -124,6 +129,7 @@ class LoginSystem:
 
 
     def account_main(self):
+        system('clear')
         while True:
             account = input('Login or create account? (login/create): ')
             if account == 'login':

@@ -1,6 +1,6 @@
 from colored import bg, fg, attr
 from emoji import emojize
-from os import system
+from os import system, stat
 from time import sleep
 from welcome import title_card, loading_animation
 from hangman import Hangman
@@ -57,6 +57,23 @@ def main():
             data['users'][username]['tokens'] = str(current_tokens + value)
             json.dump(data, user_info)
         return value
+
+    def api_key_check():
+        if stat('../data/api-key.txt').st_size == 0:
+            print('It looks like you haven\'t added your youtube api key.')
+            print('The youtube api key is required for the video player app.')
+            print()
+            add_key = input('Would you like to add your key? (yes/no): ')
+            if add_key == 'yes':
+                loading_animation(time=1)
+                api_key = input('Enter key here: ')
+                with open('../data/api-key.txt', 'w') as f:
+                    f.write(api_key)
+                return True
+            else:
+                return False
+        else:
+            return True
         
     # printing a welcome message using the title_card function from the welcome.py script as well as some emojis from the emoji module.
     # welcome message with list of apps
@@ -80,7 +97,7 @@ def main():
         app_lst()
         print()
         print('You have {} tokens in your token vault'.format(current_tokens_str))
-        # input that chooses which function to run based off user input.
+        print()
         print()
         print('Type "exit" to exit')
         print()
@@ -97,6 +114,15 @@ def main():
                 apps[app_choice](length=length, screensaver=True)
             elif app_choice == '5':
                 apps[app_choice]()
+            elif app_choice == '4':
+                loading_animation(time=1)
+                if api_key_check():
+                    loading_animation('Youtube api key detected. Enjoy the video player!', time=1)
+                    apps[app_choice]()
+                    token_gain = token_update(150)
+                    current_tokens += token_gain
+                else:
+                    loading_animation('Returning to menu...', time=1)
             elif app_choice == '7' and current_tokens <= 0:
                 loading_animation(f"Sorry, you need at least 100 tokens to play slots. You have {current_tokens} tokens. Launch apps to earn more tokens.", time=3)
             elif app_choice == '7':

@@ -7,10 +7,10 @@ reset = attr('reset')
 border_color = fg('pale_green_1a')
 error = fg('red_3a')
 
-def youtube_search(keyword, total_results=10):
+def youtube_search(keyword, total_results=151):
 
     with open('../data/api-key.txt', 'r') as api_file:
-        api_key = api_file.readlines()[0]
+        api_key = api_file.read()
 
     video_lookup = {}
 

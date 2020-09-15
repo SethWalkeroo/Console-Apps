@@ -169,6 +169,8 @@ def battleship_main():
 			print(sink_color + '** YOU HAVE SUNK ALL THE BATTLESHIPS! **' + reset)
 			print()
 		
+		display_board(game_board)
+		
 		restart = input('Would you like to play again? (yes/no): ')
 
 		if restart != 'no':
