@@ -1,9 +1,9 @@
 # Console-Apps
 A collection of my python console apps that I have made. You can launch all of them through the --> **manage.py file** <--
 
-# Applications
-
 **NOTE:** I just want to mention that the best way to experience all of the apps is through the manage.py file because it delivers an interface for launching all the applications. Not only that, but there is also a currency system that launches through manage.py and sort of gameifies the whole experience. You earn tokens by playing games and you can gamble your tokens at the slot machine. I hope to add more gambling features like Blackjack in the future, but slots is the only thing for now. 
+
+# Applications
 
 **battleship.py:** A single player battlehsip game. The board is randomally generated and you must destroy all 5 of the enemy ships before you run out of ammo. The size is variable and so are the ship sizes. I recommend sticking to the 10 by 10 board or under because the x axis doesn't match up quite right after 10. 
 
