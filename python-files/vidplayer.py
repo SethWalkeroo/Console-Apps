@@ -45,7 +45,7 @@ def video_player_main():
                 print()
 
             video_name = int(input('Which video would you like to watch? (enter the number): '))
-            loading_animation('starting media player...', time=.5)
+            loading_animation('starting media player...', time=1)
             video_choice = videos[video_name - 1]
             link = f'https://www.youtube.com/watch?v={video_choice}'
             print()
