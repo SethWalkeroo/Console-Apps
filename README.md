@@ -3,6 +3,8 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **NOTE:** I just want to mention that the best way to experience all of the apps is through the manage.py file because it delivers an interface for launching all the applications. Not only that, but there is also a currency system that launches through manage.py and sort of gameifies the whole experience. You earn tokens by playing games and you can gamble your tokens at the slot machine. I hope to add more gambling features like Blackjack in the future, but slots is the only thing for now. 
 
+**REQURIED:** I highly recommedn that you create a virtual environment within the venv folder to install all of the dependencies. There is already a requirements.txt file inside and a readme that will walk you through the process if you don't know how. I also recommend that you get your own youtube api key from console.developers.google.com and paste it in api-key.txt inside the data folder. You cannot launch the video player app without doing this.
+
 # Applications
 
 **battleship.py:** A single player battlehsip game. The board is randomally generated and you must destroy all 5 of the enemy ships before you run out of ammo. The size is variable and so are the ship sizes. I recommend sticking to the 10 by 10 board or under because the x axis doesn't match up quite right after 10. 
@@ -17,7 +19,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **tictactoe.py:** A two player tictactoe game. Like battleship, the board is variable. It is simply a coordinate based tic tac toe game for two players.
 
-**vidplayer.py** This application **REQUIRES** that you have your own youtube api key from console.developers.google.com. An application that uses youtube's api and the vlc media player to link, search, and/or download youtube videos. You can also play videos stored locally on your machine. If you choose to download a video through this applicatoin
+**vidplayer.py** This application **REQUIRES** that you have your own youtube api key from console.developers.google.com. An application that uses youtube's api and the vlc media player to link, search, and/or download youtube videos. You can also play videos stored locally on your machine. If you choose to download a video, the program will ask you to name the file and it will be saved inside the videos folder for future use. 
 
 # Other files
 
