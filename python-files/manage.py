@@ -10,7 +10,7 @@ from clock import time_main
 from vidplayer import video_player_main
 from slots import EmojiSlots
 from battleship import battleship_main
-from login import account_main
+from login import LoginSystem
 import json
 
 
@@ -19,7 +19,9 @@ import json
 # main function for the sake of organizing somewhat.
 def main():
 
-    username, current_tokens = account_main()
+    account_path = '../data/user-info.json'
+    login = LoginSystem(account_path)
+    username, current_tokens = login.account_main()
 
     #creating an instance of the slots class
     slots = EmojiSlots(tokens=current_tokens, snake=0, eggplant=200,
