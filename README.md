@@ -7,6 +7,8 @@ A collection of my python console apps that I have made. You can launch all of t
 
 # Applications
 
+**manage.py:** The central hub for launching all of the python applications. Just launch this file through the terminal and it will create an ascii gui that lists and launches all of the console apps. 
+
 **battleship.py:** A single player battlehsip game. The board is randomally generated and you must destroy all 5 of the enemy ships before you run out of ammo. The size is variable and so are the ship sizes. I recommend sticking to the 10 by 10 board or under because the x axis doesn't match up quite right after 10. 
 
 **clock.py:** A really simple clock application that displays the time in cool ascii art characters using the art module and audibally says the time with tts. You can toggle the tts on and off by ediitng the manage.py file and setting the tts argument to False in the time_main function. There is also a clock screensaver mode where you set the number of seconds that you want the time to be displayed. If you set the length argument to 'infinite' in time_main the clock screensaver will go forever.
