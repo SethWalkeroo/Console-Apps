@@ -25,7 +25,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 # Other files
 
-**login.py** This file contains the functions for the login system used in manage.py. The file either takes a username and password, reads the user-info json file, then logs you in, or takes a username and password and updates the json file with the new user credentials. 
+**login.py:** This file contains the functions for the login system used in manage.py. The file either takes a username and password, reads the user-info json file, then logs you in, or takes a username and password and updates the json file with the new user credentials. 
 
 **hangmanimage.py:** A file that simply holds an array of ascii art for **hangman.py**.
 
