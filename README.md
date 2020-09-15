@@ -15,7 +15,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **dictionary.py:** A simple dictionary application that uses the PyDictionary module. Just look up a word and the dictionary will give you a formatted list of definitions.
 
-**hangman.py:** A single player hangman game that uses a list of 18000+ randomally selected english words for the english_words module. If you do not know the word by the end of the game, the application wil ask if you want to see a definition, and then use the PyDictionary module to retrieve a definition for said word. The art for hangman.py is grabbed for the **hangmanimage.py** file and the words are grabbed from the **words.txt** file in **data** folder. This game is a personal favorite because it is fun and educational! :)
+**hangman.py:** A single player hangman game that uses a list of 18000+ randomally selected english words for the english_words module. If you do not know the word by the end of the game, the application wil ask if you want to see a definition, and then use the PyDictionary module to retrieve a definition for said word. The art for hangman.py is grabbed for the **hangmanimage.py** file and the words are grabbed from the **words.txt** file in **data** folder. This game is a personal favorite because it is fun and educational :)
 
 **slots.py:** A very simple slot machine for spending your tokens. It uses the emoji module for the matching patterns and the only way to win is to get three emojis in a row. You can edit which emojis you want to use by editing the EmojiSlots constructor arguments in manage.py.
 
