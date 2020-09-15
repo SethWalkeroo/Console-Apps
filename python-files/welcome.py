@@ -30,24 +30,21 @@ def title_card(message=message, msg_color=msg_color, msg_bg_color=msg_bg_color, 
 		message_color = fg(msg_color)
 	except KeyError:
 		print()
-		print(fg('magenta') +
-				f'ERROR: Your message color "{msg_color}" is not available. Try another.' + reset)
+		print(fg('magenta') + f'ERROR: Your message color "{msg_color}" is not available. Try another.' + reset)
 		print()
 		message_color = fg('white')
 	try:
 		pattern_color = fg(ptrn_color)
 	except KeyError:
 		print()
-		print(fg('magenta') +
-				f'ERROR: Your pattern color "{ptrn_color}" is not available. Try another.' + reset)
+		print(fg('magenta') + f'ERROR: Your pattern color "{ptrn_color}" is not available. Try another.' + reset)
 		print()
 		pattern_color = fg('white')
 	try:
 		background_color = bg(msg_bg_color)
 	except KeyError:
 		print()
-		print(fg('magenta') +
-				f'ERROR: Your message background color "{msg_bg_color}" is not available. Try another.' + reset)
+		print(fg('magenta') + f'ERROR: Your message background color "{msg_bg_color}" is not available. Try another.' + reset)
 		print()
 		background_color = bg('black')
 

@@ -39,12 +39,13 @@ class EmojiSlots:
         title_card('WELCOME TO SLOTS!')
         total_losings = 0
         tokens = self.tokens
-        print(f'You start out with {tokens} tokens! Happy gambling!')
+        print(f'You currently have {tokens} tokens! Happy gambling!')
         self.whitespace(2)
 
-        command = input('Ready to play? (each pull costs 100 tokens): ')
+        print('----- each pull costs 100 tokens -----')
+        command = input('Ready to play? (yes/no): ')
         if command == 'yes':
-
+            loading_animation('-100 tokens...', time=1)
             while command != 'no':
 
                 tokens -= 100

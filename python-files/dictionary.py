@@ -3,7 +3,7 @@ from emoji import emojize
 from itertools import cycle
 from time import sleep
 from colored import fg, bg, attr
-from welcome import title_card
+from welcome import title_card, loading_animation
 from os import system
 from time import sleep
 
@@ -40,7 +40,8 @@ class MyDictionary:
 	def exit_card(self, message):
 		try:
 			title_card(message, msg_color='white', msg_bg_color=16, ptrn_color='light_goldenrod_1', thickness=2)
-			sleep(2)
+			sleep(1)
+			loading_animation(time=1)
 		except NameError:
 			print(message)
 			sleep(1)
@@ -49,20 +50,20 @@ class MyDictionary:
 	def main(self):
 
 		#call to the welcome_card function
-		self.welcome_card('WELCOME TO SETH\'S HOLY DICTIONARY!')
+		self.welcome_card('WELCOME TO THE DICTIONARY!')
 
 		#main loop for finding definitions.
 		#this initial part is for accepting certain commands or entering a word.
 		word = ''
 		while word.strip() != 'q':
 			print()
-			word = input(self.gold + 'Type the word you want to know (type "help" for commands): ' + self.reset)
+			word = input(self.gold + 'Type the word you want to know (type "c" for commands): ' + self.reset)
 			if word == 'dev_quit':
 				break
 			elif word == 'cls':
 				self.clear()
 				continue
-			elif word == 'help':
+			elif word == 'c':
 				self.help_commands()
 				continue
 			print()
@@ -79,7 +80,7 @@ class MyDictionary:
 			        print()
 
 		#call to the exit_card function
-		self.exit_card('EXITING SETH\'S HOLY DICTIONARY!')
+		self.exit_card('EXITING THE DICTIONARY!')
 
 
 if __name__ == '__main__':
