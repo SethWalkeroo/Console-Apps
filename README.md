@@ -5,7 +5,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **RECOMMENDATIONS AND REQUIREMENTS:** I highly recommend that you create a virtual environment within the venv folder to install all of the dependencies. There is already a requirements.txt file inside and a readme that will walk you through the process if you don't know how. I also recommend that you get your own youtube api key from console.developers.google.com and paste it in api-key.txt inside the data folder. You cannot launch the video player app without doing this.
 
-# Applications
+# Apps
 
 **manage.py:** The central hub for launching all of the python applications. Just launch this file through the terminal and it will create an ascii gui that lists and launches all of the console apps. 
 
@@ -22,6 +22,8 @@ A collection of my python console apps that I have made. You can launch all of t
 **tictactoe.py:** A two player tictactoe game. Like battleship, the board is variable. It is simply a coordinate based tic tac toe game for two players.
 
 **vidplayer.py** This application **REQUIRES** that you have your own youtube api key from console.developers.google.com. An application that uses youtube's api and the vlc media player to link, search, and/or download youtube videos. You can also play videos stored locally on your machine. If you choose to download a video, the program will ask you to name the file and it will be saved inside the videos folder for future use. 
+
+**compinfo.py:** This application reads in specs and other information from your computer using the psutils module.
 
 # Other files
 
