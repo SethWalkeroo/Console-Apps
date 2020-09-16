@@ -10,6 +10,7 @@ from clock import time_main
 from vidplayer import video_player_main
 from slots import EmojiSlots
 from battleship import battleship_main
+from compinfo import ComputerInformation
 from login import LoginSystem
 import json
 
@@ -30,6 +31,9 @@ def main():
     dictionary = MyDictionary()
     # creating instance of the Hangman class
     hangman = Hangman()
+    #instance of computerinformation class
+    computer_info = ComputerInformation()
+
     # all of my colored variables for ease of use with that module.
     reset = attr('reset')
     fun = fg('dark_green') + bg(16)
@@ -40,13 +44,13 @@ def main():
     # variables
     apps = {'1': hangman.main, '2': toe_main, '3': dictionary.main,
             '4': video_player_main, '5': time_main, '6': time_main,
-            '7':slots.main, '8':battleship_main}
+            '7':slots.main, '8':battleship_main, '9':computer_info.main}
 
     token_gain = 0
 
     # function for generating the entire list of applications available in my console applications.
     def app_lst():
-        title_card('ol/|Hangman/|TicTacToe/|Dictionary/|Video Player/|Clock/|Clock Screensaver/|Slots/|Battleship',
+        title_card('ol,Hangman,TicTacToe,Dictionary,Video Player,Clock,Clock Screensaver,Slots,Battleship,PC Specs and Info',
                     msg_color='white', msg_bg_color=16, thickness=2)
 
     def token_update(value):
@@ -74,7 +78,7 @@ def main():
                 return False
         else:
             return True
-        
+
     # printing a welcome message using the title_card function from the welcome.py script as well as some emojis from the emoji module.
     # welcome message with list of apps
     def welcome_card_message():

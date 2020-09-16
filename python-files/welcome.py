@@ -62,14 +62,14 @@ def title_card(message=message, msg_color=msg_color, msg_bg_color=msg_bg_color, 
 	if message[:2] == 'ol':
 		ordered = True
 
-	if '/|' in message:
+	if ',' in message:
 		multiple_messages = True
 
 	if multiple_messages:
-		msg_lst = message.split('/|')
+		msg_lst = message.split(',')
 		if msg_lst[0] == 'ol':
 			msg_lst.pop(0)
-		ptrn_width = len(sorted(msg_lst, key=len)[-1]) + 3
+		ptrn_width = len(sorted(msg_lst, key=len)[-1]) + 4
 
 	# code that generates the message. Enter at your own risk.
 	print(pattern_color + ' ' + '-' * ptrn_width)
@@ -122,6 +122,6 @@ def loading_animation(message='', time=3, width=1):
 
 # run tests to make sure welcome.py actually works
 if __name__ == '__main__':
-	title_card('joe/|mama/|k/|om/|archepelago/|t')
+	title_card('joe,mama,k,om,archepelago,t')
 	title_card()
 	#loading_animation("searching for love...", time=10)
