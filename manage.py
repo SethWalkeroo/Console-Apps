@@ -24,7 +24,7 @@ from login import LoginSystem
 # main function for the sake of organizing somewhat.
 def main():
 
-    account_path = '../data/user-info.json'
+    account_path = 'data/user-info.json'
     login = LoginSystem(account_path)
     username, current_tokens = login.account_main()
 
@@ -58,7 +58,7 @@ def main():
                     msg_color='white', msg_bg_color=16, thickness=2)
 
     def token_update(value):
-        path = '../data/user-info.json'
+        path = account_path
         with open(path, 'r') as user_info:
             data = json.load(user_info)
         with open(path, 'w') as user_info:
