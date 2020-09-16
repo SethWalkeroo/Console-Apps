@@ -23,7 +23,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **vidplayer.py** This application **REQUIRES** that you have your own youtube api key from console.developers.google.com. An application that uses youtube's api and the vlc media player to link, search, and/or download youtube videos. You can also play videos stored locally on your machine. If you choose to download a video, the program will ask you to name the file and it will be saved inside the videos folder for future use. 
 
-**compinfo.py** This application reads in specs and other information from your computer using the psutils module.
+**compinfo.py:** This application reads in specs and other information from your computer using the psutils module.
 
 # Other files
 
