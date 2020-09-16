@@ -1,7 +1,15 @@
 from colored import bg, fg, attr
 from emoji import emojize
-from os import system, stat
+from os import system, stat, listdir, path
 from time import sleep
+import sys
+import json
+
+apps_folder = (path.abspath('apps/'))
+print(apps_folder)
+sys.path.append(path.abspath(apps_folder))
+# sys.path.append(path.abspath(entry))
+
 from welcome import title_card, loading_animation
 from hangman import Hangman
 from tictactoe import toe_main
@@ -12,10 +20,6 @@ from slots import EmojiSlots
 from battleship import battleship_main
 from compinfo import ComputerInformation
 from login import LoginSystem
-import json
-
-
-
 
 # main function for the sake of organizing somewhat.
 def main():
