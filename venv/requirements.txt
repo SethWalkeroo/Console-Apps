@@ -15,10 +15,12 @@ google-auth==1.21.1
 google-auth-httplib2==0.0.4
 googleapis-common-protos==1.52.0
 goslate==1.5.1
+GPUtil==1.4.0
 httplib2==0.18.1
 idna==2.10
 pafy==0.5.5
 protobuf==3.13.0
+psutil==5.7.2
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 PyDictionary==2.0.1
@@ -29,6 +31,7 @@ requests==2.24.0
 rsa==4.6
 six==1.15.0
 soupsieve==2.0.1
+tabulate==0.8.7
 uritemplate==3.0.1
 urllib3==1.25.10
 youtube-dl==2020.9.14
