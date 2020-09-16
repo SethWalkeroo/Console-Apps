@@ -42,6 +42,8 @@ def video_player_main():
                 print(f'Finished in {round(search_finish - search_start, 2)} second(s)')
                 print()
                 new_search = input('Would you like to search something else? (yes/no): ')
+                if new_search == 'yes':
+                    loading_animation(time=1)
                 print()
 
             video_name = int(input('Which video would you like to watch? (enter the number): '))
@@ -52,6 +54,7 @@ def video_player_main():
         elif command == 'local':
             local = True
             video_name = input('What is the name of the video?: ')
+            loading_animation('starting media...', time=1)
         elif command == 'exit':
             break
         else:
@@ -97,7 +100,7 @@ def video_player_main():
                 rename(f'../videos/{video_name}', f'../videos/{new_name}')
                 video_path = f'../videos/{new_name}'
                 print(success + f'File "{new_name}" has been successfully saved at {video_path}' + reset)
-                sleep(1)
+                sleep(2)
                 loading_animation(time=1)
             else:
                 loading_animation(time=1)

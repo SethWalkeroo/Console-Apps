@@ -140,8 +140,7 @@ def main():
         else:
             system('clear')
             print()
-            print(emojize(
-                'Oh no! :fearful: that app must not be in the list Try something else.', use_aliases=True))
+            loading_animation(emojize('Oh no! :fearful: that app must not be in the list Try something else.', use_aliases=True), time=2)
             print()
             sleep(1.4)
     title_card(f'Exiting console applications!',

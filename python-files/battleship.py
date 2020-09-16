@@ -129,6 +129,7 @@ def battleship_main():
                       destroyer_symbol: 'destroyer'}
 
 		ammo = 35
+		nukes = 2
 
 		generate_ship(game_board, 1, carrier_symbol, random.choice(directions))
 		generate_ship(game_board, 4, battleship_symbol, random.choice(directions))

@@ -1,7 +1,7 @@
 from itertools import cycle
 from string import ascii_uppercase
 from colored import fg, bg, attr
-from welcome import title_card
+from welcome import title_card, loading_animation
 from time import sleep
 from os import system
 
@@ -13,7 +13,7 @@ def toe_main():
     # color of x
     x_color = fg('red')
     # color of o
-    o_color = fg('blue')
+    o_color = fg('yellow')
     # resets the colors of the terminal
     reset = attr('reset')
     # This dictionary converts the x coordinate, which is a letter, to a number the program can use to place the move on the board
@@ -36,27 +36,23 @@ def toe_main():
         # try-catch statement to prevent invalid inputs for the board size.
         while True:
             try:
-                size = int(input('Enter size of tic tac toe game: '))
-                print()
+                size = int(input('Enter size of the tic tac toe game board: '))
+                loading_animation('creating board...', time=1)
                 break
             except ValueError:
-                print()
-                print('ERROR: Please enter an integer value for the board size.')
-                print()
+                loading_animation('ERROR: Please enter an integer value for the board size.', time=1)
                 continue
 
         # loop to make sure that the users don't both have the same name. It breaks the game if they do.
         while True:
             name1 = input('Player 1, enter your name: ')
-            print()
+            loading_animation(time=1)
             name2 = input('Player 2, enter your name: ')
-            print()
+            loading_animation(time=1)
             if name1 != name2:
                 break
             else:
-                print()
-                print('ERROR: Please choose different names...')
-                print()
+                loading_animation('ERROR: Please choose different names...', time=1)
 
         # player shape dictionary to assign shapes to player 1 and player 2.
         player_shape = {name1: 'X', name2: 'O'}
@@ -90,10 +86,9 @@ def toe_main():
                         y = int(input('Please enter the y position: '))
                         break
                     except ValueError:
-                        print('ERROR: please enter an integer value')
-                        print()
-                        continue
-                print()
+                        loading_animation('ERROR: please enter an integer value', time=1)
+
+                system('clear')
 
                 # variables for the player shapes so I dont have to repeat them.
                 player_x = x_color + player_shape[name1] + reset
@@ -124,11 +119,13 @@ def toe_main():
                         if arg != None:
                             if arg[0]:
                                 if arg[1] == 'x':
+                                    print_board()
                                     print(
                                         x_color + '{} HAS WON!'.format(name1.upper()) + reset)
                                     print()
                                     return True
                                 else:
+                                    print_board()
                                     print(
                                         o_color + '{} HAS WON!'.format(name2.upper()) + reset)
                                     print()
@@ -193,20 +190,20 @@ def toe_main():
                 # Prints the appropriate message depending on whether win_check or tie_check returns True.
                 if win_check(rows(), columns(), diagonals(), diagonals(reverse=True)):
                     again = input('Would you like to play again?: ')
-                    print()
+                    loading_animation(time=1)
                     break
                 elif tie_check():
                     again = input('Would you like to play again?: ')
-                    print()
+                    loading_animation(time=1)
                     break
 
         try:
-            title_card()
+            title_card('NOW LEAVING TIC TAC TOE!')
         except NameError:
             print('EXITING SETH\'S TIC TAC TOE GAME!')
 
         sleep(2)
-        system('clear')
+        loading_animation('Goodbye!', time=1)
     main()
 
 

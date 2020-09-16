@@ -45,7 +45,7 @@ class EmojiSlots:
         print('----- each pull costs 100 tokens -----')
         print()
         command = input('Ready to play? (yes/no): ')
-        loading_animation(time=1)
+        loading_animation('starting up the slot machine...', time=1)
         if command == 'yes':
             while command != 'no':
 
