@@ -79,7 +79,7 @@ class LoginSystem:
                         loading_animation('username accepted...', time=1)
                         break
                 else:
-                    loading_animation('Sorry that username could not be located. Try again or type "create" to create an account.', time=3)
+                    loading_animation('Sorry that username could not be located. Please try again.', time=3)
 
             while True:
                 correct_password = data['users'][username]['password']

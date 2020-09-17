@@ -16,30 +16,26 @@ class MyDictionary:
 	#color variables for easier use of the colored module
 	red = fg('red_3a')
 	cyan = fg('blue')
-	gold = fg('light_goldenrod_1')
+	gold = fg('blue')
 	key_color = bg('black') + fg('white')
 	reset = attr('reset')
 	bold = attr('bold')
 
-	#a function created to clear the console with the os.system() function
-	def clear(self):
-		system('clear')
 
 	def help_commands(self):
 		print()
 		print('q - quits the dictionary')
-		print('cls - clears the console')
 
 	#welcome message generated using the title_card function from the welcome.py script
 	def welcome_card(self, message):
 		try:
-			title_card(message, msg_color='white', msg_bg_color=16, ptrn_color='light_goldenrod_1', thickness=2)
+			title_card(message, msg_color='white', msg_bg_color=16, ptrn_color='blue', thickness=2)
 		except NameError:
 			print(message)
 
 	def exit_card(self, message):
 		try:
-			title_card(message, msg_color='white', msg_bg_color=16, ptrn_color='light_goldenrod_1', thickness=2)
+			title_card(message, msg_color='white', msg_bg_color=16, ptrn_color='blue', thickness=2)
 			sleep(1)
 			loading_animation(time=1)
 		except NameError:
@@ -57,15 +53,8 @@ class MyDictionary:
 		word = ''
 		while word.strip() != 'q':
 			print()
-			word = input(self.gold + 'Type the word you want to know (type "c" for commands): ' + self.reset)
-			if word == 'dev_quit':
-				break
-			elif word == 'cls':
-				self.clear()
-				continue
-			elif word == 'c':
-				self.help_commands()
-				continue
+			word = input(self.gold + 'Type the word you want to know (type "q" to quit): ' + self.reset)
+			loading_animation(time=1)
 			print()
 			print()
 
@@ -81,6 +70,7 @@ class MyDictionary:
 
 		#call to the exit_card function
 		self.exit_card('EXITING THE DICTIONARY!')
+		loading_animation(time=1)
 
 
 if __name__ == '__main__':
