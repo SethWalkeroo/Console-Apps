@@ -6,7 +6,6 @@ import sys
 import json
 
 apps_folder = (path.abspath('apps/'))
-print(apps_folder)
 sys.path.append(path.abspath(apps_folder))
 # sys.path.append(path.abspath(entry))
 
@@ -20,6 +19,7 @@ from slots import EmojiSlots
 from battleship import battleship_main
 from compinfo import ComputerInformation
 from login import LoginSystem
+from life import life_main
 
 # main function for the sake of organizing somewhat.
 def main():
@@ -48,13 +48,14 @@ def main():
     # variables
     apps = {'1': hangman.main, '2': toe_main, '3': dictionary.main,
             '4': video_player_main, '5': time_main, '6': time_main,
-            '7':slots.main, '8':battleship_main, '9':computer_info.main}
+            '7': slots.main, '8': battleship_main, '9': computer_info.main,
+            '10': life_main,}
 
     token_gain = 0
 
     # function for generating the entire list of applications available in my console applications.
     def app_lst():
-        title_card('ol,Hangman,TicTacToe,Dictionary,Video Player,Clock,Clock Screensaver,Slots,Battleship,PC Specs and Info',
+        title_card('ol,Hangman,TicTacToe,Dictionary,Video Player,Clock,Clock Screensaver,Slots,Battleship,PC Specs and Info,Conway\'s Game of Life',
                     msg_color='white', msg_bg_color=16, thickness=2)
 
     def token_update(value):
@@ -149,8 +150,7 @@ def main():
             system('clear')
             print()
             loading_animation(emojize('Oh no! :fearful: that app must not be in the list Try something else.', use_aliases=True), time=2)
-            print()
-            sleep(1.4)
+    system('clear')
     title_card(f'Exiting console applications!',
         msg_color='white', msg_bg_color=16, ptrn_color='white', thickness=1)
     sleep(.75)

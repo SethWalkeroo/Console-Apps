@@ -69,19 +69,22 @@ def title_card(message=message, msg_color=msg_color, msg_bg_color=msg_bg_color, 
 		msg_lst = message.split(',')
 		if msg_lst[0] == 'ol':
 			msg_lst.pop(0)
-		ptrn_width = len(sorted(msg_lst, key=len)[-1]) + 4
+		ptrn_width = len(sorted(msg_lst, key=len)[-1]) + 5
 
 	# code that generates the message. Enter at your own risk.
 	print(pattern_color + ' ' + '-' * ptrn_width)
 	pattern(thickness, ptrn_width, ptrn, speed)
 	print('|' + '-' * ptrn_width + '|')
 	if multiple_messages:
-		for count, msg in enumerate(msg_lst):
-			spacing_ordered = ptrn_width - len(msg) - 3
+		for count, msg in enumerate(msg_lst, 1):
+			if count < 10:
+				spacing_ordered = ptrn_width - len(msg) - 3
+			else:
+				spacing_ordered = ptrn_width - len(msg) - 4
 			spacing_unordered = ptrn_width - len(msg)
 			if ordered:
 				# This is the worst thing I have ever made. God have mercy on my soul...
-				print('|' + message_color + '{}: {}'.format(background_color + str(count + 1),
+				print('|' + message_color + '{}: {}'.format(background_color + str(count),
 					background_color + msg + ' ' * spacing_ordered + reset + pattern_color + '|'))
 			else:
 				print('|' + message_color + '{}'.format(background_color + msg + ' ' * spacing_unordered + reset + pattern_color + '|'))
