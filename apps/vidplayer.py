@@ -14,7 +14,7 @@ success = fg('green')
 delete = fg('red_3a')
 reset = attr('reset')
 
-def video_player_main():
+def video_player_main(managed=True):
     welcome_message = 'WELCOME TO THE VIDEO PLAYER!'
     title_card(welcome_message)
 
@@ -68,7 +68,10 @@ def video_player_main():
             best = video.getbest()
             media = MediaPlayer(best.url)
         else:
-            video_path = f'../videos/{video_name}'
+            if not managed:
+                video_path = f'../videos/{video_name}'
+            else:
+                video_path = f'videos/{video_name}'
             media = MediaPlayer(video_path)
 
         while True:
@@ -91,14 +94,21 @@ def video_player_main():
             keep = input('Would you like to download that video? (yes/no): ')
             loading_animation(time=1)
             if keep == 'yes':
-                video_path = f'../videos/{video_name}'
+                if not managed:
+                    video_path = f'../videos/{video_name}'
+                else:
+                    video_path = f'videos/{video_name}'
                 # gets the best quality for the download
                 best.download(filepath=video_path, quiet=False)
                 loading_animation(time=1)
                 new_name = input('What would you like to name this video?: ')
                 print()
-                rename(f'../videos/{video_name}', f'../videos/{new_name}')
-                video_path = f'../videos/{new_name}'
+                if not managed:
+                    rename(f'../videos/{video_name}', f'../videos/{new_name}')
+                    video_path = f'../videos/{new_name}'
+                else:
+                    rename(f'videos/{video_name}', f'videos/{new_name}')
+                    video_path = f'videos/{new_name}'
                 print(success + f'File "{new_name}" has been successfully saved at {video_path}' + reset)
                 sleep(2)
                 loading_animation(time=1)
@@ -109,7 +119,8 @@ def video_player_main():
     title_card(exit_message)
     sleep(1.5)
     loading_animation('goodbye!', time=1)
+    
 
 
 if __name__ == '__main__':
-    video_player_main()
+    video_player_main(managed = False)

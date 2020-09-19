@@ -68,7 +68,7 @@ def main():
         return value
 
     def api_key_check():
-        if stat('../data/api-key.txt').st_size == 0:
+        if stat('data/api-key.txt').st_size == 0:
             print('It looks like you haven\'t added your youtube api key.')
             print('The youtube api key is required for the video player app.')
             print()
@@ -76,7 +76,7 @@ def main():
             if add_key == 'yes':
                 loading_animation(time=1)
                 api_key = input('Enter key here: ')
-                with open('../data/api-key.txt', 'w') as f:
+                with open('data/api-key.txt', 'w') as f:
                     f.write(api_key)
                 return True
             else:

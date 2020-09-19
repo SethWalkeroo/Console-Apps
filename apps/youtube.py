@@ -7,10 +7,14 @@ reset = attr('reset')
 border_color = fg('pale_green_1a')
 error = fg('red_3a')
 
-def youtube_search(keyword, total_results=25):
+def youtube_search(keyword, total_results=25, managed=True):
 
-    with open('../data/api-key.txt', 'r') as api_file:
-        api_key = api_file.read()
+    if managed:
+        with open('data/api-key.txt', 'r') as api_file:
+            api_key = api_file.read()
+    else:
+        with open('../data/api-key.txt', 'r') as api_file:
+            api_key = api_file.read()
 
     video_lookup = {}
 
@@ -58,7 +62,7 @@ def youtube_search(keyword, total_results=25):
 
 
 if __name__ == '__main__':
-    print(youtube_search('rick and morty'))
+    print(youtube_search('rick and morty', managed=False))
 
 
 
