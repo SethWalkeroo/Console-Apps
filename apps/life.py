@@ -53,7 +53,7 @@ ptrns = [blinker, toad, glider, acorn, light_spaceship,
 ptrns_str = ['blinker', 'toad', 'glider', 'acorn',
 			'light spaceship', 'middle_spaceship',
 			'large spaceship', 'gosper glider gun',
-			'custom pattern']
+			'custom pattern', 'random mode']
 
 reset = attr('reset')
 pattern_symbol = fg('green') + '◼' + reset
@@ -139,6 +139,12 @@ def map_wipe(map, gx, gy, symbol=pattern_symbol, nuke=False):
 				if map[x][y] == pattern_symbol:
 					map[x][y] = board_pattern
 
+def random_mode(map, gx, gy):
+	for _ in range(gx * gy):
+		rand_x = random.randint(0, gx - 1)
+		rand_y = random.randint(0, gy - 1)
+		map[rand_x][rand_y] = pattern_symbol
+
 def life_main():
 
 	system('clear')
@@ -200,6 +206,9 @@ def life_main():
 			# system('clear')
 			if pattern_choice == '9':
 				pass
+			elif pattern_choice == '10':
+				random_mode(map, gx, gy)
+				pattern_choice = 'f'
 			elif pattern_choice in patterns:
 				while True:
 					try:
