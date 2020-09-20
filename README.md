@@ -25,6 +25,8 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **compinfo.py:** This application reads in specs and other information from your computer using the psutils module.
 
+**life.py** This is Conway's Game of Life. You can either watch a grid of randomly generated cells or you can create your own board with either the pre built patterns that I provide or a custom one that you make yourself. Custom patterns aren't availabole at the time I am writing this, but I am hoping to implement them soon.
+
 # Other files
 
 **login.py:** This file contains the functions for the login system used in manage.py. The file either takes a username and password, reads the user-info json file, then logs you in, or takes a username and password and updates the json file with the new user credentials. 
