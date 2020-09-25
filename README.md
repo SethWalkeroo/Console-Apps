@@ -25,7 +25,7 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **compinfo.py:** This application reads in specs and other information from your computer using the psutils module.
 
-**life.py:** This is Conway's Game of Life. You can either watch a grid of randomly generated cells or you can create your own board with either the pre built patterns that I provide or a custom one that you make yourself. This is one of my favorites, but the code for it is god awful. I repeat myself often and organized the code like an absolute clown. I managed to take Python's simplicity and make it appear stupidly complex. 
+**life.py:** This is Conway's Game of Life. You can either watch a grid of randomly generated cells or you can create your own board with either the pre built patterns that I provide or a custom one that you make yourself. This is one of my favorites, but the code for it is god awful. I repeat myself often and organized the code like an absolute clown. I managed to take Python's simplicity and make it appear stupidly complex, but that is something you'll probably notice a lot in these apps. 
 
 # Other files
 
