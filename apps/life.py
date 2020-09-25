@@ -2,8 +2,9 @@ from os import system
 from time import sleep
 from colored import fg, bg, attr
 from welcome import title_card, loading_animation
-import random
 from itertools import cycle
+import random
+import json
 
 
 
@@ -48,17 +49,28 @@ gosper_glider_gun = [(1, 25),
 					(9, 13), (9, 14)]
 
 ptrns = [blinker, toad, glider, acorn, light_spaceship,
-		middle_spaceship, large_spaceship, gosper_glider_gun,]
+		middle_spaceship, large_spaceship, gosper_glider_gun]
 
-ptrns_str = ['blinker', 'toad', 'glider', 'acorn',
-			'light spaceship', 'middle_spaceship',
-			'large spaceship', 'gosper glider gun',
-			'custom pattern', 'random mode']
 
+ptrns_str = ['random mode', 'create custom pattern',
+			 'delete custom pattern', 'blinker',
+			 'toad', 'glider', 'acorn',
+			 'light spaceship', 'middle_spaceship',
+			 'large spaceship', 'gosper glider gun']
+
+
+verified = ['random mode', 'create custom pattern',
+			 'delete custom pattern', 'blinker',
+			 'toad', 'glider', 'acorn',
+			 'light spaceship', 'middle_spaceship',
+			 'large spaceship', 'gosper glider gun']
+
+
+
+custom_path = '../data/user-cells.json'
 reset = attr('reset')
 pattern_symbol = fg('green') + '◼' + reset
 board_pattern = fg(16) + '◻' + reset
-patterns = {str(count):ptrn for count, ptrn in enumerate(ptrns, 1)}
 colors = cycle([i for i in range(9, 231)])
 test_symbols = cycle([fg(next(colors)) + '◼' + reset for i in range(231)])
 space = 10
@@ -66,7 +78,7 @@ spacing = ' ' * space
 grid_size_x = 50
 grid_size_y = 50
 
-def adjacent_check(map, gx, gy, x, y, wrap=True):
+def adjacent_check(grid, gx, gy, x, y, wrap=True):
 	adjacent_living = 0
 	positions = [(x, y-1), (x, y+1), (x-1, y), (x+1, y), (x-1, y+1),
 				(x-1, y-1), (x+1, y-1), (x+1, y+1)]
@@ -82,68 +94,69 @@ def adjacent_check(map, gx, gy, x, y, wrap=True):
 				y = 0
 			elif y < 0:
 				y = max_y
-			if map[x][y] == pattern_symbol:
+			if grid[x][y] == pattern_symbol:
 				adjacent_living += 1
 		else:
 			if x == -1 or y == -1:
 				pass
 			else:
 				try:
-					if map[x][y] == pattern_symbol:
+					if grid[x][y] == pattern_symbol:
 						adjacent_living += 1
 				except IndexError:
 					pass
 
 	return adjacent_living
 
-def starting_cells(map, cell_list, ptrn_symbol, init_x=0, init_y=0):
+def starting_cells(grid, cell_list, ptrn_symbol, init_x=0, init_y=0):
 	for x, y in cell_list:
 		adjusted_x = x + init_x
 		adjusted_y = y + init_y
 		if adjusted_x >= 0 and adjusted_y >= 0:
-			if map[adjusted_x][adjusted_y] == pattern_symbol:
+			if grid[adjusted_x][adjusted_y] == pattern_symbol:
 				break
 			else:
-				map[adjusted_x][adjusted_y] = ptrn_symbol
+				grid[adjusted_x][adjusted_y] = ptrn_symbol
 		else:
 			break
 
-def life_rules(map, gx, gy, wrap=True):
+def life_rules(grid, gx, gy, wrap=True):
 	dead_cells = []
 	birthed_cells = []
 	for x_pos in range(gx):
 		for y_pos in range(gy):
-			if map[x_pos][y_pos] == pattern_symbol:
-				if adjacent_check(map, gx, gy, x_pos, y_pos, wrap) >= 4:
+			if grid[x_pos][y_pos] == pattern_symbol:
+				if adjacent_check(grid, gx, gy, x_pos, y_pos, wrap) >= 4:
 					dead_cells.append((x_pos, y_pos))
-				elif adjacent_check(map, gx, gy, x_pos, y_pos, wrap) < 2:
+				elif adjacent_check(grid, gx, gy, x_pos, y_pos, wrap) < 2:
 					dead_cells.append((x_pos, y_pos))
-			elif map[x_pos][y_pos] == board_pattern:
-				if adjacent_check(map, gx, gy, x_pos, y_pos,wrap) == 3:
+			elif grid[x_pos][y_pos] == board_pattern:
+				if adjacent_check(grid, gx, gy, x_pos, y_pos,wrap) == 3:
 					birthed_cells.append((x_pos, y_pos))
 
 	for x, y in dead_cells:
-		map[x][y] = board_pattern
+		grid[x][y] = board_pattern
 	for x, y in birthed_cells:
-		map[x][y] = pattern_symbol
+		grid[x][y] = pattern_symbol
 
 
-def map_wipe(map, gx, gy, symbol=pattern_symbol, nuke=False):
+def map_wipe(grid, gx, gy, symbol=pattern_symbol, nuke=False):
 	for x in range(gx):
 		for y in range(gy):
-			if map[x][y] == symbol:
-				map[x][y] = board_pattern
+			if grid[x][y] == symbol:
+				grid[x][y] = board_pattern
 	if nuke:
 		for x in range(gx):
 			for y in range(gy):
-				if map[x][y] == pattern_symbol:
-					map[x][y] = board_pattern
+				if grid[x][y] == pattern_symbol:
+					grid[x][y] = board_pattern
 
-def random_mode(map, gx, gy):
+def random_mode(grid, gx, gy):
 	for _ in range(gx * gy):
 		rand_x = random.randint(0, gx - 1)
 		rand_y = random.randint(0, gy - 1)
-		map[rand_x][rand_y] = pattern_symbol
+		grid[rand_x][rand_y] = pattern_symbol
+
 
 def life_main():
 
@@ -173,48 +186,137 @@ def life_main():
 	gx = grid_size_x
 	gy = grid_size_y
 
-	map = [[board_pattern for i in range(grid_size_x)]for i in range(grid_size_y)]
+	grid = [[board_pattern for i in range(grid_size_x)]for i in range(grid_size_y)]
+	custom_grid = grid.copy()
 
-
-	def map_display(map, coordinates=True):
+	def map_display(grid, coordinates=True):
 		if coordinates:
 			print('     ' + spacing + '0' + (' ' * (grid_size_x * 2 - 3)) + str(grid_size_x - 1))
 			print('     ' + spacing + ''.join(['-' for i in range(grid_size_x * 2)]))
-			for count, line in enumerate(map):
+			for count, line in enumerate(grid):
 				if count < 10:
 					print(spacing + '{}  | {}'.format(count, ' '.join(line) + '|'))
 				else:
 					print(spacing + '{} | {}'.format(count, ' '.join(line) + '|'))
 			print('     ' + spacing + ''.join(['-' for i in range(grid_size_x * 2)]))
 		else:
-			for line in map:
+			for line in grid:
 				print(spacing + ' '.join(line))
 
 	while True:
+
 		system('clear')
 		pattern_choice = None
-		message = 'ol,{}'.format(','.join(ptrns_str))
 		print()
-		map_wipe(map, gx, gy, nuke=True)
-		display_map = map.copy()
+		map_wipe(grid, gx, gy, nuke=True)
+		display_grid = grid.copy()
+
+		def save_pattern():
+			print()
+			save_name = input('What would you like to name this cell?: ')
+			custom_cell_coords = []
+			for x in range(gx):
+				for y in range(gy):
+					if custom_grid[x][y] == pattern_symbol:
+						custom_cell_coords.insert(0, [x, y])
+
+			with open(custom_path, 'r') as custom_cells:
+				data = json.load(custom_cells)
+			with open(custom_path, 'w') as custom_cells:
+				data['custom_cells'][save_name] = custom_cell_coords
+				json.dump(data, custom_cells)
+			map_wipe(custom_grid, gx, gy)
+
 		loading_animation(time=1)
 		while pattern_choice != 'f':
+
+			with open(custom_path, 'r') as custom:
+				custom_data = json.load(custom)
+				custom_patterns = {cell_name:pattern for cell_name, pattern in custom_data['custom_cells'].items()}
+			
+			for ptrn_name in custom_patterns:
+				if ptrn_name not in ptrns_str:
+					ptrns.append(custom_patterns[ptrn_name])
+					ptrns_str.append(ptrn_name)
+
+			patterns = {str(count):ptrn for count, ptrn in enumerate(ptrns, 1)}
+			message = 'ol,{}'.format(','.join(ptrns_str))
 			title_card(message)
 			pattern_choice = input('Which pattern would you like to add to the grid?: ')
 			print()
-			# map_display(map)
+			# map_display(grid)
 			# system('clear')
-			if pattern_choice == '9':
-				pass
-			elif pattern_choice == '10':
-				random_mode(map, gx, gy)
+			if pattern_choice == '2':
+				while True:
+					system('clear')
+					map_display(custom_grid)
+					print()
+					print('Type "clear" to reset the grid, "exit" to exit, or "save" to save your cell design.')
+					print()
+					cx = input('Enter x coordinate: ')
+					if cx == 'clear':
+						map_wipe(custom_grid, gx, gy)
+						continue
+					elif cx == 'exit':
+						system('clear')
+						break
+					elif cx == 'save':
+						save_pattern()
+						print()
+						another_custom = input('Would you like to create another custom cell? [y/n]: ')
+						if another_custom == 'n':
+							system('clear')
+							break
+						else:
+							system('clear')
+							continue
+					else:
+						try:
+							cx = int(cx)
+						except ValueError:
+							loading_animation('make sure to enter an integer value for coordinates...', time=1)
+							continue
+					try:
+						cy = int(input('Enter y coordinate: '))
+					except ValueError:
+						loading_animation('make sure to enter an integer value for coordinates...', time=1)
+						continue
+					custom_grid[cx][cy] = pattern_symbol
+
+			elif pattern_choice == '3':
+				while True:
+					print()
+					cell_name = input('Enter the name of the pattern you are deleting or type "exit" to exit: ')
+					if cell_name in ptrns_str and cell_name not in verified:
+						with open(custom_path, 'r') as custom:
+							data = json.load(custom)
+						with open(custom_path, 'w') as custom:
+							del data['custom_cells'][cell_name]
+							json.dump(data, custom)
+						index = ptrns_str.index(cell_name)
+						ptrns.pop(index - 3)
+						ptrns_str.remove(cell_name)
+						system('clear')
+						break
+					elif cell_name == 'exit':
+						system('clear')
+						break
+					else:
+						print()
+						print('That cell/pattern name is either non-custom or doesn\'t exist')
+
+							
+
+
+			elif pattern_choice == '1':
+				random_mode(grid, gx, gy)
 				pattern_choice = 'f'
-			elif pattern_choice in patterns:
+			elif str(int(pattern_choice) - 3) in patterns:
 				while True:
 					try:
 						symbol = next(test_symbols)
 						system('clear')
-						map_display(map)
+						map_display(grid)
 						print()
 						print(spacing + 'Enter starting position for pattern')
 						print()
@@ -229,14 +331,14 @@ def life_main():
 						except ValueError:
 							loading_animation('ERROR: make sure to enter integer value', time=1)
 							continue
-						pattern = patterns[pattern_choice]
-						starting_cells(display_map, pattern, symbol, init_x, init_y)
+						pattern = patterns[str(int(pattern_choice) - 3)]
+						starting_cells(display_grid, pattern, symbol, init_x, init_y)
 						system('clear')
-						map_display(display_map)
+						map_display(display_grid)
 						print()
 						confirmation = input(spacing + 'Are you sure about this placement? (y/n): ')
 						if confirmation == 'y':
-							starting_cells(map, pattern, pattern_symbol, init_x, init_y)
+							starting_cells(grid, pattern, pattern_symbol, init_x, init_y)
 							print()
 							another = input(spacing + f'would you like to add another pattern {pattern_choice}? (y/n): ')
 							print()
@@ -249,16 +351,16 @@ def life_main():
 								print()
 								pattern_choice = input(spacing + 'enter response: ')
 								if pattern_choice == 'wipe':
-									map_wipe(display_map, gx, gy, symbol, nuke=True)
+									map_wipe(display_grid, gx, gy, symbol, nuke=True)
 									loading_animation('wiping entire board', time=1)
 								system('clear')
 								break
 						else:
-							map_wipe(display_map, gx, gy, symbol)
+							map_wipe(display_grid, gx, gy, symbol)
 
 					except IndexError:
 						loading_animation('** ERROR: Those coordinates either don\'t exist or do not fit the selected patern **', time=3)
-						map_wipe(display_map, gx, gy, symbol)
+						map_wipe(display_grid, gx, gy, symbol)
 			else:
 				loading_animation('Sorry that pattern is not in the patterns list. Try again.', time=2)
 
@@ -280,8 +382,8 @@ def life_main():
 
 		system('clear')
 		for i in range(length * 20):
-			map_display(map, coordinates=False)
-			life_rules(map, gx, gy, wrap=wrap)
+			map_display(grid, coordinates=False)
+			life_rules(grid, gx, gy, wrap=wrap)
 			sleep(.05)
 			system('clear')
 
@@ -295,15 +397,15 @@ def life_main():
 			break
 
 	system('clear')
-	title_card('THANKS FOR TRYING OUT MY APP!')
+	title_card('THANKS FOR TRYING THE GAME OF LIFE!')
 	sleep(1)
-	loading_animation('Goodbye!', time=1)
+	loading_animation('Now back to the real thing!', time=1)
 
 def pattern_test():
 	pattern_choice = '7'
 	pattern = patterns[pattern_choice]
-	starting_cells(map, pattern)
-	map_display(map)
+	starting_cells(grid, pattern)
+	map_display(grid)
 
 if __name__ == '__main__':
 	system('clear')
