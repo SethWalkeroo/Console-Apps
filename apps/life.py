@@ -176,6 +176,30 @@ def random_mode(grid, gx, gy):
 		grid[rand_x][rand_y] = pattern_symbol
 
 
+def rotate_ptrn(grid, pattern, quadrant):
+
+	def x_reflect():
+		return [(pair[0], pair[1] * -1) for pair in pattern]
+
+	def y_reflect():
+		return [(pair[0] * -1, pair[1]) for pair in pattern]
+
+	if quadrant == 1:
+		rotated_ptrn = x_reflect()
+		return rotated_ptrn
+	elif quadrant == 2:
+		rotated_ptrn = y_reflect()
+		return rotated_ptrn
+	elif quadrant == 3:
+		rotated_ptrn = x_reflect()
+		return rotated_ptrn
+	elif quadrant == 4:
+		rotated_ptrn = y_reflect()
+		return rotated_ptrn
+	else:
+		print('wtf, how?')
+
+
 #main function that holds the main game loop.
 #this is kind of rediculous and unorganized but
 #I really just wanted to hack this together and make it work.
@@ -183,7 +207,9 @@ def random_mode(grid, gx, gy):
 #readable and organized code. I guess the main issue is that this is a console app
 #and it's hard to make a console app look pretty with all these strings for UI.
 def life_main(managed=True):
-	
+
+	quadrant_tracker = 1
+
 	if managed:
 		custom_path = 'data/user-cells.json'
 	else:
@@ -396,7 +422,26 @@ def life_main(managed=True):
 						system('clear')
 						map_display(display_grid)
 						print()
-						confirmation = input(spacing + 'Are you sure about this placement? (y/n): ')
+						rotate = input(spacing + 'Reflect your cells? [y/n]: ')
+						if rotate == 'y':
+							system('clear')
+							while True:
+								pattern = rotate_ptrn(display_grid, pattern, quadrant_tracker)
+								map_wipe(display_grid, gx, gy, symbol)
+								starting_cells(display_grid, pattern, symbol, init_x, init_y)
+								quadrant_tracker += 1
+								if quadrant_tracker == 5:
+									quadrant_tracker = 1
+								map_display(display_grid)
+								print()
+								more_rotation = input(spacing + 'Reflect again? [y/n]: ')
+								if more_rotation == 'n':
+									print()
+									break
+								else:
+									system('clear')
+
+						confirmation = input(spacing + 'Are you sure about this placement? [y/n]: ')
 						if confirmation == 'y':
 							starting_cells(grid, pattern, pattern_symbol, init_x, init_y)
 							print()
