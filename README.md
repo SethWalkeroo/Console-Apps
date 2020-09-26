@@ -39,6 +39,8 @@ A collection of my python console apps that I have made. You can launch all of t
 
 **user-info.json:** Contains all of the usernames, passwords, and token counts for users who create an account in manage.py.
 
+**user-cells.json:** Contains all of the custom cells made by users in the **life.py** (Conway's Game of Life) app. 
+
 **words.txt:** Contains all of the words used in hangman.py app.
 
 **api-key.txt:** The text file provided for you to paste you youtube api key if you want to use the videplayer.py app.
