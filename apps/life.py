@@ -7,7 +7,7 @@ import random
 import json
 
 
-
+#hard coded patterns and list of patterns below
 blinker = [(0, 0), (1, 0), (-1, 0)]
 
 toad = [(0, 0), (0, 1), (0, 2),
@@ -66,8 +66,12 @@ verified = ['random mode', 'create custom pattern',
 			 'large spaceship', 'gosper glider gun']
 
 
-
-custom_path = '../data/user-cells.json'
+#variables for color and pattern symbols.
+#grid size is a default value for whatever reason.
+#The colors and test_symbols use the cycle function from the itertools module.
+#This is so that the user can undo a pattern from their design
+#if they change their mind while setting up the board because
+#each design is unique and can be undone as a certain color.
 reset = attr('reset')
 pattern_symbol = fg('green') + '◼' + reset
 board_pattern = fg(16) + '◻' + reset
@@ -78,6 +82,9 @@ spacing = ' ' * space
 grid_size_x = 50
 grid_size_y = 50
 
+#adjacent check does what you would think it to do.
+#this function checks all the adjacent cells around each cell
+#and determines whether or not there are a certain amount of adjacent living cells. 
 def adjacent_check(grid, gx, gy, x, y, wrap=True):
 	adjacent_living = 0
 	positions = [(x, y-1), (x, y+1), (x-1, y), (x+1, y), (x-1, y+1),
@@ -108,6 +115,9 @@ def adjacent_check(grid, gx, gy, x, y, wrap=True):
 
 	return adjacent_living
 
+#this function creates and places the starting patterns for the game of life.
+#this is the function that places down the patterns passed in and adjusts them
+#based on the user's x and y coordinates.
 def starting_cells(grid, cell_list, ptrn_symbol, init_x=0, init_y=0):
 	for x, y in cell_list:
 		adjusted_x = x + init_x
@@ -120,6 +130,10 @@ def starting_cells(grid, cell_list, ptrn_symbol, init_x=0, init_y=0):
 		else:
 			break
 
+#These are the rules for cell death and cell life.
+#This function works with the adjacent_check function
+#to determine whether or not each cell in the current generation
+#should live or die. 
 def life_rules(grid, gx, gy, wrap=True):
 	dead_cells = []
 	birthed_cells = []
@@ -139,7 +153,8 @@ def life_rules(grid, gx, gy, wrap=True):
 	for x, y in birthed_cells:
 		grid[x][y] = pattern_symbol
 
-
+#wipes a grid depending on what you pass for an argument and a certain symbol from said grid.
+#the nuke option wipes the pattern_symbol from the board no matter what is passed.
 def map_wipe(grid, gx, gy, symbol=pattern_symbol, nuke=False):
 	for x in range(gx):
 		for y in range(gy):
@@ -151,6 +166,9 @@ def map_wipe(grid, gx, gy, symbol=pattern_symbol, nuke=False):
 				if grid[x][y] == pattern_symbol:
 					grid[x][y] = board_pattern
 
+#this function selects random positions on the board for cells.
+#The amount of random cells is the gridx length (gx) times the
+#gridy length (gy). 
 def random_mode(grid, gx, gy):
 	for _ in range(gx * gy):
 		rand_x = random.randint(0, gx - 1)
@@ -158,7 +176,18 @@ def random_mode(grid, gx, gy):
 		grid[rand_x][rand_y] = pattern_symbol
 
 
-def life_main():
+#main function that holds the main game loop.
+#this is kind of rediculous and unorganized but
+#I really just wanted to hack this together and make it work.
+#Hopefully I don't make a habit out of this and get better at making
+#readable and organized code. I guess the main issue is that this is a console app
+#and it's hard to make a console app look pretty with all these strings for UI.
+def life_main(managed=True):
+	
+	if managed:
+		custom_path = 'data/user-cells.json'
+	else:
+		custom_path = '../data/user-cells.json'
 
 	system('clear')
 	title_card('WELCOME TO THE GAME OF LIFE!', thickness=2)
@@ -189,6 +218,9 @@ def life_main():
 	grid = [[board_pattern for i in range(grid_size_x)]for i in range(grid_size_y)]
 	custom_grid = grid.copy()
 
+	#displays the grid with or without coordinates.
+	#the coordinates are displayed during the game creation stages
+	#and the coordinates are not displayed while the game runs. 
 	def map_display(grid, coordinates=True):
 		if coordinates:
 			print('     ' + spacing + '0' + (' ' * (grid_size_x * 2 - 3)) + str(grid_size_x - 1))
@@ -204,13 +236,20 @@ def life_main():
 				print(spacing + ' '.join(line))
 
 	while True:
-
+		
+		stop_the_friggin_program = False
 		system('clear')
 		pattern_choice = None
 		print()
 		map_wipe(grid, gx, gy, nuke=True)
 		display_grid = grid.copy()
 
+		#function for saving custom patterns
+		#you enter the name you want to save it as
+		#then the function iterates trhough ever space on the board
+		#and adds the spaces with a pattern to the custom_cell_coards list
+		#that pattern is then dumped into the user-cells.json file
+		#with the save name you chose.
 		def save_pattern():
 			print()
 			save_name = input('What would you like to name this cell?: ')
@@ -230,6 +269,8 @@ def life_main():
 		loading_animation(time=1)
 		while pattern_choice != 'f':
 
+			#this part of the code loads in all of the custom patterns
+			#from user-cells.json. 
 			with open(custom_path, 'r') as custom:
 				custom_data = json.load(custom)
 				custom_patterns = {cell_name:pattern for cell_name, pattern in custom_data['custom_cells'].items()}
@@ -239,13 +280,16 @@ def life_main():
 					ptrns.append(custom_patterns[ptrn_name])
 					ptrns_str.append(ptrn_name)
 
+			#creating a list of patterns with a str(value) pair for the user to select
+			#the message is for the title_card function which is from the welcome.py file. 
 			patterns = {str(count):ptrn for count, ptrn in enumerate(ptrns, 1)}
 			message = 'ol,{}'.format(','.join(ptrns_str))
 			title_card(message)
 			pattern_choice = input('Which pattern would you like to add to the grid?: ')
 			print()
-			# map_display(grid)
-			# system('clear')
+			#'2' is the key for the create custom cell choice
+			#a user can create their own design once cell at a time
+			#inside of a seperate display grid
 			if pattern_choice == '2':
 				while True:
 					system('clear')
@@ -282,7 +326,10 @@ def life_main():
 						loading_animation('make sure to enter an integer value for coordinates...', time=1)
 						continue
 					custom_grid[cx][cy] = pattern_symbol
-
+			#'3' is the delete custom pattern choice
+			#The user will enter the name of said pattern
+			#and the following code overwrites that pattern in the json file
+			#as well as the pattern string list. 
 			elif pattern_choice == '3':
 				while True:
 					print()
@@ -305,12 +352,25 @@ def life_main():
 						print()
 						print('That cell/pattern name is either non-custom or doesn\'t exist')
 
-							
-
-
+			#clearly uses the random_mode function
+			#which places random cells on the grid
 			elif pattern_choice == '1':
 				random_mode(grid, gx, gy)
+			
+			#stops the current loop and sets
+			#stop_the_friggin_program to True
+			#this was a stupid work around/solution
+			#but I really just wanted to make this work.
+			elif pattern_choice == 'exit':
 				pattern_choice = 'f'
+				stop_the_friggin_program = True
+				break
+			
+			#if you choose one of the hard coded patterns
+			#or one of the patterns you already created
+			#you will be brought to a grid where you will decide
+			#the general location you want it to exist based on
+			#the first position in the pattern.
 			elif str(int(pattern_choice) - 3) in patterns:
 				while True:
 					try:
@@ -364,7 +424,12 @@ def life_main():
 			else:
 				loading_animation('Sorry that pattern is not in the patterns list. Try again.', time=2)
 
+		#loop to decide how long you want the life game to run
+		#it also asks if you want the cells to be able to wrap
+		#around the edges of the grid. 
 		while True:
+			if stop_the_friggin_program:
+				break
 			try:
 				loading_animation(time=1)
 				print()
@@ -379,22 +444,26 @@ def life_main():
 				break
 			except ValueError:
 				print('Please only enter integer values...')
-
-		system('clear')
-		for i in range(length * 20):
-			map_display(grid, coordinates=False)
-			life_rules(grid, gx, gy, wrap=wrap)
-			sleep(.05)
+		
+		if not stop_the_friggin_program:
 			system('clear')
+			for i in range(length * 20):
+				map_display(grid, coordinates=False)
+				life_rules(grid, gx, gy, wrap=wrap)
+				sleep(.05)
+				system('clear')
 
-		loading_animation(spacing + 'ending simulation...', time=1)
-		print()
-		print()
-		repeat = input(spacing + 'Would you like to create another game of life? (y/n): ')
-		if repeat == 'y':
-			pattern_choice = 'again!'
-		else:
-			break
+			loading_animation(spacing + 'ending simulation...', time=1)
+			print()
+			print()
+			repeat = input(spacing + 'Would you like to create another game of life? (y/n): ')
+			if repeat == 'y':
+				pattern_choice = 'again!'
+				continue
+			else:
+				break
+		
+		break
 
 	system('clear')
 	title_card('THANKS FOR TRYING THE GAME OF LIFE!')
@@ -411,6 +480,6 @@ if __name__ == '__main__':
 	system('clear')
 	mode = 'main'
 	if mode == 'main':
-		life_main()
+		life_main(managed=False)
 	else:
 		pattern_test()
