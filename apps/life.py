@@ -382,6 +382,7 @@ def life_main(managed=True):
 			#which places random cells on the grid
 			elif pattern_choice == '1':
 				random_mode(grid, gx, gy)
+				break
 			
 			#stops the current loop and sets
 			#stop_the_friggin_program to True
@@ -455,7 +456,7 @@ def life_main(managed=True):
 								print(spacing + ' - Or hit enter to enter another pattern')
 								print()
 								pattern_choice = input(spacing + 'enter response: ')
-								if pattern_choice == 'wipe':
+								if pattern_choice == 'w':
 									map_wipe(display_grid, gx, gy, symbol, nuke=True)
 									loading_animation('wiping entire board', time=1)
 								system('clear')
